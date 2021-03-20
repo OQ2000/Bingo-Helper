@@ -1,11 +1,9 @@
-lst = [8, 68, 130]
+from math import dist
+import cv2 as cv
+from time import sleep
+from display import Display
 
-for item in lst:
-    print("item", item)
-    if item < 20:
-        print("top")
-    if item > 20 and item < 90:
-        print("middle")
-    if item > 91:
-        print("bottom")
+image = Display.update_called_numbers_display("55")
 
+cv.imshow(Display.window_name, image)
+cv.waitKey()

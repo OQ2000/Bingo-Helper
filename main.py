@@ -1,19 +1,22 @@
 import cv2 as cv
 from time import sleep
 
-from page_extractor import Page_extractor
-from house import House
+from page import Page
+from game import Game
+from display import Display
 
-called_numbers = ['7', '13','52','0', '83', '9', '0', '20', '0', '48', '58', '64', '0', '0', "37"]
+called_numbers = []
 
-img_path = "output_with_numbers/1.png"
+img_path = "cut_book.jpg"
 
-def extract_houses():  
-    img_array = Page_extractor.house_extractor("bingo_book.jpg")
-    return img_array
-img_array = extract_houses()
+page1 = Page("page1")
 
-house_array = Page_extractor.get_house_as_array(img_array[0])
+page1.extract_houses(img_path)
 
-game1 = House(house_array)
-game1.check_all(called_numbers)
+while True:
+    called_numbers.append(input("Called: "))
+    page1.check_all_houses(called_numbers)
+    image = Display.update_called_numbers_display(called_numbers)
+
+    cv.imshow(Display.window_name, image)
+    cv.waitKey(1)

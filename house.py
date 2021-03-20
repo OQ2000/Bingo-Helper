@@ -1,10 +1,10 @@
 class House:
     house = []
-    def __init__(self, game):
-        self.house = game
+    def __init__(self, house):
+        self.house = house
 
     @classmethod
-    def check_house(cls, house, called_numbers, rtn="bool"):
+    def check_house(cls, house, called_numbers, rtn_type="bool"):
         '''
         called_numbers needs to be a list of strings\n
         rtn:\n
@@ -20,13 +20,13 @@ class House:
                 if elem in called_numbers or elem == "0":
                     num_need_to_find = num_need_to_find - 1
             if num_need_to_find == 0:
-                if rtn == "bool":
+                if rtn_type == "bool":
                     return True# line is true
-                elif rtn == "line":
+                elif rtn_type == "line":
                     return line
-                if rtn == "total":
+                if rtn_type == "total":
                     no_of_lines = no_of_lines + 1
-        if rtn == "total":
+        if rtn_type == "total":
             if no_of_lines == 0:
                 return None
             else:
@@ -37,18 +37,13 @@ class House:
             print("Line Found")
 
     def check_for_double_line(self, called_numbers):
-        if House.check_house(self.house, called_numbers, rtn="total") >= 2:
+        if House.check_house(self.house, called_numbers, rtn_type="total") >= 2:
             print("Double Line Found")
 
     def check_for_full_house(self, called_numbers):
-        if House.check_house(self.house, called_numbers, rtn="total") >= 3:
+        if House.check_house(self.house, called_numbers, rtn_type="total") >= 3:
             print("Full House Found")
 
     def check_all(self, called_numbers):
-        rtn = House.check_house(self.house, called_numbers, rtn="total")
-        if rtn == 1:
-            print("Line Found")
-        if rtn == 2:
-            print("Double Line Found")
-        if rtn == 3:
-            print("Full House Found")
+        rtn = House.check_house(self.house, called_numbers, rtn_type="total")
+        return rtn

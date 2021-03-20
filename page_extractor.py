@@ -90,7 +90,11 @@ class Page_extractor:
                 new_img = img[y:y+h, x:x+w]
                 img_array.append(new_img)
                 # cv.imwrite("output_with_numbers/" + str(idx) + '.png', new_img)
-        return img_array
+        array_of_house_arrays_as_string = []
+        for i in range(len(img_array)):
+            house_array_as_string = Page_extractor.get_house_as_array(img_array[i])
+            array_of_house_arrays_as_string.append(house_array_as_string)
+        return array_of_house_arrays_as_string
     @classmethod
     def detect_box(cls, image,line_min_width=41,min_val=120,max_val=255):
         # gray_scale=cv.cvtColor(image,cv.COLOR_BGR2GRAY) # Changed to using image in threshold due to path errors
@@ -158,7 +162,7 @@ class Page_extractor:
         return cur_row
 
     @classmethod
-    def get_house_as_array(cls, img): # Swapped to passing img in instead of saving and reading for no reason
+    def get_house_as_array(cls, img):
         methods = ["top", "middle", "bottom"]
         whole_game = []
         for i in range(3):
