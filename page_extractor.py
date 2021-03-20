@@ -77,10 +77,9 @@ class Page_extractor:
         contours, hierarchy = cv.findContours(img_final_bin, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
         # Sort all the contours by top to bottom.
         (contours, boundingBoxes) = Page_extractor.sort_contours(contours, method="top-to-bottom")
-
-        print("Output stored in Output directiory!")
-
+        # print("Output stored in Output directiory!")
         idx = 0
+        img_array = []
         for c in contours:
             # Returns the location and width,height for every contour
             x, y, w, h = cv.boundingRect(c)
@@ -89,11 +88,13 @@ class Page_extractor:
             if (w > 80 and h > 20) and w > 3*h:
                 idx += 1
                 new_img = img[y:y+h, x:x+w]
-                cv.imwrite("output_with_numbers/" + str(idx) + '.png', new_img)
+                img_array.append(new_img)
+                # cv.imwrite("output_with_numbers/" + str(idx) + '.png', new_img)
+        return img_array
     @classmethod
     def detect_box(cls, image,line_min_width=41,min_val=120,max_val=255):
-        gray_scale=cv.cvtColor(image,cv.COLOR_BGR2GRAY)
-        th1,img_bin=cv.threshold(gray_scale,min_val,max_val,cv.THRESH_BINARY)
+        # gray_scale=cv.cvtColor(image,cv.COLOR_BGR2GRAY) # Changed to using image in threshold due to path errors
+        th1,img_bin=cv.threshold(image,min_val,max_val,cv.THRESH_BINARY)
         kernal_h=np.ones((1,line_min_width), np.uint8)
         kernal_v=np.ones((line_min_width,1), np.uint8)
         img_bin_h=cv.morphologyEx(~img_bin, cv.MORPH_OPEN, kernal_h)
@@ -110,13 +111,13 @@ class Page_extractor:
         return rectangles
 
     @classmethod
-    def get_individual_boxes(cls, img_path, row="top"):
+    def get_individual_boxes(cls, img, row="top"):
         '''
         row=(top,middle,bottom)
         '''
-        game = cv.imread(img_path)  # Read the image
-        game = game[...,:3]
-        rects = Page_extractor.detect_box(game)
+        # game = cv.imread(img_path)  # Read the image
+        # game = game[...,:3]
+        rects = Page_extractor.detect_box(img)
         retangles = []
         for x,y,w,h,area in rects[2:]:
             rect = [x,y,w,h]
@@ -157,12 +158,11 @@ class Page_extractor:
         return cur_row
 
     @classmethod
-    def get_whole_game_as_array(cls, img_path):
-        img = cv.imread(img_path, 0)
+    def get_house_as_array(cls, img): # Swapped to passing img in instead of saving and reading for no reason
         methods = ["top", "middle", "bottom"]
         whole_game = []
         for i in range(3):
-            boxes = Page_extractor.get_individual_boxes(img_path, row=methods[i])
+            boxes = Page_extractor.get_individual_boxes(img, row=methods[i])
             new_str = []
             for x,y,w,h in boxes:
                 new_img = img[y:y+h, x:x+w]
