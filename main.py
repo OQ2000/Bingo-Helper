@@ -7,11 +7,15 @@ from display import Display
 
 called_numbers = []
 
-img_path = "cut_book.jpg"
+img_path = "bingo_book.jpg"
 
 page1 = Page("page1")
 
 page1.extract_houses(img_path)
+
+for house in page1.list_houses:
+    for House in house.house:
+        print(House)
 
 while True:
     called_numbers.append(input("Called: "))

@@ -1,9 +1,8 @@
-from math import dist
+from pytesseract import image_to_boxes, Output
 import cv2 as cv
-from time import sleep
-from display import Display
 
-image = Display.update_called_numbers_display("55")
+img = cv.imread("cut_book.jpg")
+config ="outputbase digits"
+boxes = image_to_boxes(img, output_type=Output.DICT, config=config)
 
-cv.imshow(Display.window_name, image)
-cv.waitKey()
+print(boxes["char"])
