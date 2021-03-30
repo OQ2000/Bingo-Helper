@@ -10,18 +10,45 @@ I set out with the goal to be able to give the OpenCV2 Algorithm an image of a s
 
 ## How it works
 <div align="center">
-<h4> Specify Book </h4>
+<div>
+  <h4> Specify Book </h4>
   <p>
   You specify the bingo book that you wish to read. <br>
   I used this example to read from, this is just a standard bingo book. <br>
-  
+    
   <img src="bingo_book.jpg" alt="Example of Bingo Book" width=150/>
   </p>
+</div>
 
-  <h4> identify horizontal and vertical lines to find boxes </h4>
+<div> 
+  <h4> Identify horizontal and vertical lines to find boxes </h4>
   <p>
+  I then used OpenCV2 to find horizontal lines and vertical lines. <br>
+
   <img src="Images/horizontal_lines.jpg" alt="Horizontal Lines" width=150/>
   <img src="Images/verticle_lines.jpg" alt="Vertical Lines" width=150/>
   </p>
+</div>
+
+<div>
+<h4>Combine images</h4>
+  <p>
+  I combine the vertical and horizontal images together to find all boxes on the sheet.<br>
+  I then overlay this image with the original to get all of the numbers with thier boxes. <br>
+
+  <img src="Images/img_final_bin.jpg" alt="Horizontal Lines" width=150/>
+  <img src="Images/Image_bin.jpg" alt="Horizontal Lines" width=150/>
+  </p>
+</div>
+
+<div>
+<h4>I then extract each of these boxes</h4>
+  <p>
+  I used <a href="https://opensource.google/projects/tesseract">Googles Tesseract OCR</a> to store all numbers in the boxes in an object <br>
+  I store these numbers in a House object, then each these House objects is stores in a Page object, then these Page objects are stored ultimatly in a Game object.
+  This gives the structure that a Game can contain multiple Pages and a Page can contain multiple Houses. <br>
+  This adds the functionality to play multiple Pages for one game. <br>
+  </p>
+</div>
 </div>
 
