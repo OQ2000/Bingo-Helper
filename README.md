@@ -51,4 +51,3 @@ I set out with the goal to be able to give the OpenCV2 Algorithm an image of a s
   </p>
 </div>
 </div>
-
